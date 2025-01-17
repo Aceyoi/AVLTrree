@@ -1,4 +1,7 @@
+п»їп»ї//РЎР°РїРѕР¶РЅРёРєРѕРІ Р®СЂРёР№ РР’Рў-22
+
 #pragma once
+
 #include <iostream>
 #include <algorithm>
 #include <cassert>
@@ -8,8 +11,48 @@
 
 using namespace std;
 
-// Функция для тестирования стандартных алгоритмов
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ СЂР°Р±РѕС‚С‹ AVL РґРµСЂРµРІР°
 void testcheck() {
+
+    AVLTree<int> tree;
+
+    tree.insert(10);
+    tree.preOrder(); cout << "\n";
+    tree.insert(20);
+    tree.preOrder(); cout << "\n";
+    tree.insert(30);
+    tree.preOrder(); cout << "\n";
+    tree.insert(40);
+    tree.preOrder(); cout << "\n";
+    tree.insert(50);
+    tree.preOrder(); cout << "\n";
+    tree.insert(60);
+    tree.preOrder(); cout << "\n";
+    tree.insert(70);
+    tree.preOrder(); cout << "\n";
+    tree.insert(80);
+    tree.preOrder(); cout << "\n";
+
+    vector<int> keys = tree.getKeys();// РњРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°РµС‚ РІРµРєС‚РѕСЂ РІСЃРµС… РєР»СЋС‡РµР№ РІ РґРµСЂРµРІРµ РІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРј РїРѕСЂСЏРґРєРµ
+    vector<int> expectedKeys = { 10, 20, 30, 40, 50, 60, 70, 80 };// Р’РµРєС‚РѕСЂ С…СЂР°РЅРёС‚ РѕР¶РёРґР°РµРјС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РєР»СЋС‡РµР№
+    assert(keys == expectedKeys); // РџСЂРѕРІРµСЂСЏРµС‚
+
+    tree.remove(20);
+    vector<int> keys1 = tree.getKeys();
+    vector<int> expectedKeys1 = { 10, 30, 40, 50, 60, 70, 80 };
+    assert(keys1 == expectedKeys1);
+
+    assert(tree.search(50) != nullptr);
+    assert(tree.search(100) == nullptr);
+
+    tree.update(10, 90);
+    assert(tree.search(10) == nullptr);
+
+    cout << "РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ СЂР°Р±РѕС‚С‹ AVL РґРµСЂРµРІР° РІС‹РїРѕР»РЅРµРЅРЅРѕ" << endl;
+}
+
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ СЃС‚Р°РЅРґР°СЂС‚РЅС‹С… Р°Р»РіРѕСЂРёС‚РјРѕРІ
+void stdcheck() {
 
     AVLTree<int> tree;
 
@@ -22,34 +65,34 @@ void testcheck() {
     tree.insert(70);
     tree.insert(80);
 
-    // Сбор всех ключей дерева в вектор
+    // РЎР±РѕСЂ РІСЃРµС… РєР»СЋС‡РµР№ РґРµСЂРµРІР° РІ РІРµРєС‚РѕСЂ
     vector<int> keys = tree.getKeys();
 
-    // Использование copy_if для копирования четных чисел
+    // РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ copy_if РґР»СЏ РєРѕРїРёСЂРѕРІР°РЅРёСЏ С‡РµС‚РЅС‹С… С‡РёСЃРµР»
     vector<int> evenKeys;
     copy_if(keys.begin(), keys.end(), back_inserter(evenKeys), [](int x) { return x % 2 == 0; });
     assert(evenKeys == vector<int>({ 10, 20, 30, 40, 50, 60, 70, 80 }));
 
-    // Использование for_each для увеличения всех элементов на 1
+    // РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ for_each РґР»СЏ СѓРІРµР»РёС‡РµРЅРёСЏ РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ РЅР° 1
     for_each(keys.begin(), keys.end(), [](int& x) { x += 1; });
     assert(keys == vector<int>({ 11, 21, 31, 41, 51, 61, 71, 81 }));
 
-    // Использование any_of для проверки наличия числа больше 50
+    // РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ any_of РґР»СЏ РїСЂРѕРІРµСЂРєРё РЅР°Р»РёС‡РёСЏ С‡РёСЃР»Р° Р±РѕР»СЊС€Рµ 50
     bool anyGreaterThan50 = any_of(keys.begin(), keys.end(), [](int x) { return x > 50; });
     assert(anyGreaterThan50 == true);
 
-    // Использование all_of для проверки, что все числа больше 10
+    // РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ all_of РґР»СЏ РїСЂРѕРІРµСЂРєРё, С‡С‚Рѕ РІСЃРµ С‡РёСЃР»Р° Р±РѕР»СЊС€Рµ 10
     bool allGreaterThan10 = all_of(keys.begin(), keys.end(), [](int x) { return x > 10; });
     assert(allGreaterThan10 == true);
 
-    // Использование none_of для проверки, что ни одно число не меньше 10
+    // РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ none_of РґР»СЏ РїСЂРѕРІРµСЂРєРё, С‡С‚Рѕ РЅРё РѕРґРЅРѕ С‡РёСЃР»Рѕ РЅРµ РјРµРЅСЊС€Рµ 10
     bool noneLessThan10 = none_of(keys.begin(), keys.end(), [](int x) { return x < 10; });
     assert(noneLessThan10 == true);
 
-    // Использование transform для умножения всех элементов на 2
+    // РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ transform РґР»СЏ СѓРјРЅРѕР¶РµРЅРёСЏ РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ РЅР° 2
     vector<int> doubledKeys(keys.size());
     transform(keys.begin(), keys.end(), doubledKeys.begin(), [](int x) { return x * 2; });
     assert(doubledKeys == vector<int>({ 22, 42, 62, 82, 102, 122, 142, 162 }));
 
-    cout << "All standard algorithm tests passed!" << endl;
+    cout << "РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ СЃС‚Р°РЅРґР°СЂС‚РЅС‹С… Р°Р»РіРѕСЂРёС‚РјРѕРІ РІС‹РїРѕР»РЅРµРЅРЅРѕ" << endl;
 }

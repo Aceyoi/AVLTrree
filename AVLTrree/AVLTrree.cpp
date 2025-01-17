@@ -1,4 +1,6 @@
-﻿#include <iostream>
+﻿﻿//Сапожников Юрий ИВТ-22
+
+#include <iostream>
 #include <algorithm>
 #include <cassert>
 #include <vector>
@@ -14,9 +16,7 @@ int main() {
 
     testcheck();
 
-    AVLTree<int> tree;
-
-    tree.testavl(); // Тестируем дерево с 8 элементамиv
+    stdcheck();
 
     return 0;
 }
