@@ -68,16 +68,19 @@ void stdcheck() {
     // Сбор всех ключей дерева в вектор
     vector<int> keys = tree.getKeys();
 
-    // Использование copy_if для копирования четных чисел
+    // Использование copy_if для копирования диапозона чисел с условием (четных чисел)
     vector<int> evenKeys;
+    //keys.begin() keys.end() - откуда надо копировать и до
+    //back_inserter(evenKeys) - представляет итератор на начало диапазона, в который надо вставить скопированные значения 
+    //условие
     copy_if(keys.begin(), keys.end(), back_inserter(evenKeys), [](int x) { return x % 2 == 0; });
     assert(evenKeys == vector<int>({ 10, 20, 30, 40, 50, 60, 70, 80 }));
 
-    // Использование for_each для увеличения всех элементов на 1
+    // Использование for_each для выполенния обхода и обработки элементов (увеличения всех элементов на 1)
     for_each(keys.begin(), keys.end(), [](int& x) { x += 1; });
     assert(keys == vector<int>({ 11, 21, 31, 41, 51, 61, 71, 81 }));
 
-    // Использование any_of для проверки наличия числа больше 50
+    // Использование any_of для проверки, что хотя бы одно число больше 50
     bool anyGreaterThan50 = any_of(keys.begin(), keys.end(), [](int x) { return x > 50; });
     assert(anyGreaterThan50 == true);
 
@@ -89,7 +92,8 @@ void stdcheck() {
     bool noneLessThan10 = none_of(keys.begin(), keys.end(), [](int x) { return x < 10; });
     assert(noneLessThan10 == true);
 
-    // Использование transform для умножения всех элементов на 2
+    // Использование transform для умножения всех элементов на 2 ()
+    // Вернёт итератор doubledKeys.begin() увеличенный на количество элементов записанных через него. 
     vector<int> doubledKeys(keys.size());
     transform(keys.begin(), keys.end(), doubledKeys.begin(), [](int x) { return x * 2; });
     assert(doubledKeys == vector<int>({ 22, 42, 62, 82, 102, 122, 142, 162 }));
